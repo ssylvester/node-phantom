@@ -56,7 +56,7 @@ module.exports={
 		
 		io.sockets.on('connection',function(socket){
 			socket.on('res',function(response){
-//				console.log(response);
+				//console.log(response);
 				var id=response[0];
 				var cmdId=response[1];
 				switch(response[2]){
@@ -70,6 +70,9 @@ module.exports={
 						},
 						render:function(filename,callback){
 							request(socket,[id,'pageRender',filename],callbackOrDummy(callback));
+						},
+						renderBase64:function(format, callback){
+							request(socket,[id,'pageRenderBase64', format],callbackOrDummy(callback));
 						},
 						injectJs:function(url,callback){
 							request(socket,[id,'pageInjectJs',url],callbackOrDummy(callback));
@@ -125,6 +128,10 @@ module.exports={
 				case 'pageSetDone':
 				case 'pageJsIncluded':
 				case 'pageRendered':
+				case 'page64Rendered':
+					cmds[cmdId].cb(null,response[3]);
+					delete cmds[cmdId];
+					break;
 				case 'pageEventSent':
 				case 'pageFileUploaded':
 					cmds[cmdId].cb(null);
