@@ -11,5 +11,8 @@
   "main": "node-phantom.js",
   "dependencies": {"socket.io": ">=0.9.6"},
   "devDependencies": {"socket.io": ">=0.9.2"},
-  "optionalDependencies": {}
+  "optionalDependencies": {},
+   "engines": {
+    "node": ">= 0.4.0"
+  },
 }
